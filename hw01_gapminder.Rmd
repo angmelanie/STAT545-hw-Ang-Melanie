@@ -1,0 +1,25 @@
+---
+title: "RMarkdown 1"
+author: "Melanie Ang"
+date: '2017-09-14'
+output: 
+  github_document: 
+    html_preview: false
+---
+
+## Hello world!
+This is my first RMarkdown document
+I'm adding some code below here
+
+```{r chunk 1}
+x <- c(10:15)
+y <- c(15:20)
+plot(x, y)
+```
+
+Looks promising so far...
+
+```{r chunk 2}
+summary(x)
+```
+
