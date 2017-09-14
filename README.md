@@ -5,7 +5,7 @@ STAT545 homework 1 assignment
 
 My name is **Melanie Ang** and I'm a masters student studying fish!
 
-i[](https://media.giphy.com/media/VNPdGi7XsQZaw/giphy.gif)
+![](https://media.giphy.com/media/VNPdGi7XsQZaw/giphy.gif)
 
 More specifically, I study the impacts of climate change on fish distributions and fisheries in the Pacific Ocean.
 
