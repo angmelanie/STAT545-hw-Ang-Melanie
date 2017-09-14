@@ -5,7 +5,7 @@ STAT545 homework 1 assignment
 
 My name is **Melanie Ang** and I'm a masters student studying fish!
 
-i[](https://media.giphy.com/media/VNPdGi7XsQZaw/giphy.gif)
+![](https://media.giphy.com/media/VNPdGi7XsQZaw/giphy.gif)
 
 More specifically, I study the impacts of climate change on fish distributions and fisheries in the Pacific Ocean.
 
@@ -14,6 +14,7 @@ More specifically, I study the impacts of climate change on fish distributions a
 - I love diving
 - My favourite food is sushi
 - I am a CEO of <a href="http://www.sanddollarenterprises.com">Sand Dollar Enterprises</a>
+<<<<<<< HEAD
 
 ## Report on my progress:
 
@@ -24,3 +25,5 @@ More specifically, I study the impacts of climate change on fish distributions a
     + I edited the changes in RStudio and commit, pull and pushed
     
 Overall, a great first 2 weeks of class! I've been using RStudio and R scripts previously but not R Markdown. I'm liking the functions of it being able to save my analysis not just the code. Learning about cool resources and programs which I hope to implement in my research!
+=======
+>>>>>>> 50fc2c68f2edfc8282fb785584115f9db283fb25
