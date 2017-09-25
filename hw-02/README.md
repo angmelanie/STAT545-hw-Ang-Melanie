@@ -11,4 +11,4 @@ What you will find in this directory:
   + this contains the figures (in .png) generated from my r code
 * This README document!
 * homework-02 in 3 versions (.Rmd, .html and .md)
-  + **I suggest looking at the .md file for embedded figures**
+  + **I suggest looking at the .md file for embedded figures** <-- LOOK HERE!
