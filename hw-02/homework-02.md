@@ -59,6 +59,7 @@ str(gapminder) # country: factor, continent: factor, year: integer, lifeExp: num
 ## Exploring individual variables
 
 ### Categorical variables: country and continent
+I have selected 2 categorical variables to evaluate! Country and continent
 
 ```r
 # Country
@@ -99,7 +100,7 @@ unique(gapminder$continent) # 5 continents (Asia, Europe, Africa, America, Ocean
 ## Levels: Africa Americas Asia Europe Oceania
 ```
 
-## Quantitative variable : pop and year
+### Quantitative variable : pop and year
 I have selected 2 quantitative variables to evaluate! Population and year. Again, I have hidden the output of these code below (eval = FALSE) because it is very long, please see comments within for answers.
 
 
@@ -153,6 +154,7 @@ ggplot(data = gapminder, aes(gapminder$continent)) +
 ```
 
 ![](homework-02_files/figure-html/Histogram-1.png)<!-- -->
+  
 **Tip 3: Do you like pretty colours like I do? Want to customize your graphs? Not just regular, boring blue but meet cornflower blue. To find a list of preset colours in R click [here](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf). You can also specify HEX colours by including them with a hashtag "#FFFFFF"**
 
 
@@ -165,10 +167,7 @@ ggplot(gapminder,
 ```
 
 ![](homework-02_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
-
-```r
-# This displays all the countries in the gapminder dataset, which is obviously too many to effectively display in boxplots. In the following step, I use the filter function to subset the data to plot
-```
+This displays all the countries in the gapminder dataset, which is obviously too many to effectively display in boxplots. In the following step, I use the filter function to subset the data to plot
 
 ### Use filter() to subset the above dataset
 
@@ -203,7 +202,7 @@ gapminder %>%
 **Tip 4: I've also learned that to display plots from RMarkdown on GitHub you need to save RMarkdown file as a raw file (.md). Then also commit and push these images to GitHub. [click here](https://github.com/STAT540-UBC/Discussion/issues/11)**
 
 
-### But I want to do more!
+## But I want to do more!
 
 
 ```r
@@ -274,7 +273,7 @@ gapminder %>%
 ## # ... with 14 more rows
 ```
 
-####Playing around with other dplyr functions
+###Playing around with other dplyr functions
 
 ```r
 gapminder %>% 
@@ -311,6 +310,7 @@ colnames(gapminder) <- c("country", "continent", "year", "LifeExp", "pop", "GDP 
 
 
 ```r
+# grouping by continent and counting how many within
 gapminder %>%
   group_by(continent) %>%
   tally()
@@ -328,6 +328,7 @@ gapminder %>%
 ```
 
 ```r
+# another way of doing it:
 gapminder %>%
   count(continent)
 ```
@@ -349,14 +350,13 @@ A simple (prettier) table generator!
 
 
 ```r
+library(knitr)
 gapminder %>%
   count(continent) %>% 
-  knitr::kable(align = "c", caption = "Number of countries in each continent from Gapminder dataset")
+  knitr::kable(align = "c")
 ```
 
 
-
-Table: Number of countries in each continent from Gapminder dataset
 
  continent     n  
 -----------  -----
@@ -367,7 +367,7 @@ Table: Number of countries in each continent from Gapminder dataset
   Oceania     24  
 
 ```r
-# Looks like more custom options available wit rownames, colnames, table title etc
+# Looks like more custom options available with rownames, colnames, table title etc
 ```
 
 
