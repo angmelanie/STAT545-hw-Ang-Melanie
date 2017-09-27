@@ -1,0 +1,107 @@
+---
+title: "hw-03"
+author: "Melanie Ang"
+date: "September 27, 2017"
+output: 
+  html_document: 
+    keep_md: yes
+---
+
+# Homework 3
+In this homework, I experiment with dplyr (to manipulate data) and ggplot (to visualize data). Click [here](http://stat545.com/hw03_dplyr-and-more-ggplot2.html) to see the assignment on the STAT545 homework on web
+
+### Step 1: Download packages
+```{r packages, warning = FALSE, results='hide', message=FALSE}
+library(gapminder) # our data set
+library(tidyverse) # dplyr and ggplot2
+```
+
+### Task menu
+I've picked four task from the selection on the [task section of the website](http://stat545.com/hw03_dplyr-and-more-ggplot2.html#task-menu) 
+
+**1. Get the maximum and minimum of GDP per capita for all continents.**
+
+```{r question 1 table}
+summary(gapminder)
+#gdpPercap
+gapminder %>%
+  select(continent, gdpPercap) %>%  # subset only relevant columns so its neater
+  group_by(continent) %>%           # group according to continents
+  summarize(min_gdppercap=min(gdpPercap), 
+            max_gdppercap=max(gdpPercap)) %>% 
+  knitr::kable()                    # display in kable
+```
+```{r question 1 display plot}
+p <- gapminder %>%
+  select(continent, gdpPercap) %>%  # subset only relevant columns so its neater
+  group_by(continent) %>%           # group according to continents
+  summarize(min_gdppercap = min(gdpPercap), 
+            max_gdppercap = max(gdpPercap)) 
+
+# display just minimum 
+ggplot(p, aes(x=continent, y=min_gdppercap)) +
+  geom_point()
+
+
+ggplot(p, aes(x=continent)) +
+  geom_point(aes(y=min_gdppercap), colour = "blue") +
+  geom_point(aes(y=max_gdppercap), colour = "red") +
+  labs(y = "GDP per Cap")
+```
+
+2. Look at the spread of GDP per capita within the continents  
+Within spread, I chose to look at mean, standard deviation and median
+
+```{r question 2 table}
+gapminder %>%
+  group_by(continent) %>% 
+  summarize(mean_gdp = mean(gdpPercap), sd_gdp = sd(gdpPercap), median_gdp = median(gdpPercap))
+
+```
+
+```{r question 2 plot}
+gapminder %>%
+  group_by(continent) %>% 
+  summarize(mean_gdp = mean(gdpPercap), sd_gdp = sd(gdpPercap), median_gdp = median(gdpPercap)) %>% 
+  ggplot(aes(x = continent)) +                  # setting continent as base x axis
+  geom_point(aes(y = mean_gdp), colour = "purple") + # change colour
+  geom_point(aes(y = sd_gdp), colour = "turquoise", shape = 3) + # change shape
+  geom_point(aes(y = median_gdp), colour = "orange", size = 5) + # change size
+  labs(y = "GDP per cap")
+```
+
+3. How is life expectancy changing over time on different continents?
+
+```{r question 3 table}
+gapminder %>% 
+  group_by(continent) %>% 
+  select(continent, lifeExp, year) %>% 
+  knitr::kable()
+# is there a better way to display this?
+  
+```
+
+```{r question 3 plot}
+gapminder %>% 
+  group_by(continent) %>% 
+  select(continent, lifeExp, year) %>%
+  ggplot(aes(x=year, y=lifeExp)) +
+  geom_line(aes(colour = continent)) 
+```
+
+4. Find countries with interesting stories. Open-ended and, therefore, hard. Promising but unsuccessful attempts are encouraged. This will generate interesting questions to follow up on in class.
+
+```{r}
+
+```
+
+5. Make up your own! Between the dplyr coverage in class and the list above, I think you get the idea.
+
+
+
+```{r}
+gapminder %>% 
+  filter(year %in% c("2000", "2002")) %>% 
+  select(country, year, gdpPercap)
+```
+
