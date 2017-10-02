@@ -8,12 +8,19 @@ output:
 ---
 
 # Homework 3
-In this homework, I experiment with dplyr (to manipulate data) and ggplot (to visualize data). Click [here](http://stat545.com/hw03_dplyr-and-more-ggplot2.html) to see the assignment on the STAT545 homework on web
+In this homework, I experiment with dplyr (to manipulate data) and ggplot (to visualize data). Click [here](http://stat545.com/hw03_dplyr-and-more-ggplot2.html) to see the assignment on the STAT545 homework on web.
+
+Again, check out the **tips** sprinkled through the documents for some of the things I've learned in this process of completing hwk-03.
 
 ### Step 1: Download packages
 ```{r packages, warning = FALSE, results='hide', message=FALSE}
 library(gapminder) # our data set
 library(tidyverse) # dplyr and ggplot2
+
+# for kable
+library(knitr)
+devtools::install_github("haozhu233/kableExtra")
+library(kableExtra)
 ```
 
 ### Task menu
@@ -22,86 +29,158 @@ I've picked four task from the selection on the [task section of the website](ht
 **1. Get the maximum and minimum of GDP per capita for all continents.**
 
 ```{r question 1 table}
-summary(gapminder)
-#gdpPercap
+# Display in table
+# Use dplyr functions to select, group by, summarize and display in kable
+
 gapminder %>%
   select(continent, gdpPercap) %>%  # subset only relevant columns so its neater
   group_by(continent) %>%           # group according to continents
   summarize(min_gdppercap=min(gdpPercap), 
             max_gdppercap=max(gdpPercap)) %>% 
-  knitr::kable()                    # display in kable
+  knitr::kable(format = "markdown")                    # display in kable
 ```
 ```{r question 1 display plot}
+#Plot it!
+
+# There are multiple ways to do this. I could pipe contents into a ggplot for example. In this case, I chose to store value in a variable and call that variable later
 p <- gapminder %>%
   select(continent, gdpPercap) %>%  # subset only relevant columns so its neater
   group_by(continent) %>%           # group according to continents
   summarize(min_gdppercap = min(gdpPercap), 
             max_gdppercap = max(gdpPercap)) 
 
-# display just minimum 
+# testing by displaying just minimum 
 ggplot(p, aes(x=continent, y=min_gdppercap)) +
   geom_point()
 
-
+# Display both minimum and maximum using geom_point
 ggplot(p, aes(x=continent)) +
   geom_point(aes(y=min_gdppercap), colour = "blue") +
   geom_point(aes(y=max_gdppercap), colour = "red") +
-  labs(y = "GDP per Cap")
+  labs(y = "GDP per Cap") +
+  theme_bw()
+# I could get fancy here and customize the plot - one of the things I love about ggplot!
 ```
 
-2. Look at the spread of GDP per capita within the continents  
+**Tip 1: Further customization of your ggplots using ggthemes!**
+I love customizing with colours and fonts etc. 
+There are some prebuilt ggplot2 themes. [Click here](http://ggplot2.tidyverse.org/reference/ggtheme.html)
+You can also use the ggthemes package for additional themes. Check out the [ggtheme](https://github.com/jrnold/ggthemes) github for info on more pre-built themes.
+
+```{r}
+library(ggthemes)
+
+q <- ggplot(p, aes(x=continent)) +
+  geom_point(aes(y=min_gdppercap)) +
+  geom_point(aes(y=max_gdppercap)) +
+  labs(y = "GDP per Cap")
+
+q + theme_economist() #ggthemes
+q + theme_dark() #ggplot2
+```
+
+
+
+**2. Look at the spread of GDP per capita within the continents** 
 Within spread, I chose to look at mean, standard deviation and median
 
+**Tip 2: Further customization of kable tables**
+
 ```{r question 2 table}
-gapminder %>%
+spread <- gapminder %>%
   group_by(continent) %>% 
-  summarize(mean_gdp = mean(gdpPercap), sd_gdp = sd(gdpPercap), median_gdp = median(gdpPercap))
+  summarize(mean_gdp = mean(gdpPercap), 
+            sd_gdp = sd(gdpPercap), 
+            median_gdp = median(gdpPercap),
+            max_gdp = max(gdpPercap),
+            min_gdp = min(gdpPercap))
+
+spread %>%
+  kable(format = "html", 
+  col.names = c("Continent", "Mean GDP", "Standard Deviation", "Median", "Maximum", "Minimum"), 
+  caption = "Spread of GDP within continents of the Gapminder dataset") %>%
+  kable_styling()
 
 ```
 
 ```{r question 2 plot}
+
+# Option 1 - display specifically mean, SD and median
 gapminder %>%
   group_by(continent) %>% 
-  summarize(mean_gdp = mean(gdpPercap), sd_gdp = sd(gdpPercap), median_gdp = median(gdpPercap)) %>% 
+  summarize(mean_gdp = mean(gdpPercap), 
+            sd_gdp = sd(gdpPercap), 
+            median_gdp = median(gdpPercap)) %>% 
   ggplot(aes(x = continent)) +                  # setting continent as base x axis
   geom_point(aes(y = mean_gdp), colour = "purple") + # change colour
   geom_point(aes(y = sd_gdp), colour = "turquoise", shape = 3) + # change shape
   geom_point(aes(y = median_gdp), colour = "orange", size = 5) + # change size
-  labs(y = "GDP per cap")
+  ggtitle("Mean, Standard Deviation and Median \nof GDP per Capita on Different Continents") +
+  labs(y = "GDP per cap") 
+  
+# Option 2 - boxplot spread
+gapminder %>%
+  ggplot(aes(x = continent, y = gdpPercap)) +
+  geom_boxplot(aes(fill = continent), show.legend = FALSE) +
+  labs(x = "Continent", y = "GDP per capita", title = "Spread of GDP in each continent") +
+  theme_minimal()
 ```
 
-3. How is life expectancy changing over time on different continents?
+**3. How is life expectancy changing over time on different continents?**
 
 ```{r question 3 table}
+# within each continent, look at the change in life expectancy for each year
 gapminder %>% 
-  group_by(continent) %>% 
-  select(continent, lifeExp, year) %>% 
+  group_by(continent, year) %>% 
+  summarize(mean_lifeExp = mean(lifeExp)) %>%
   knitr::kable()
-# is there a better way to display this?
+
+# we pick 2 years: the first reported year and last, 1952 and 2007  
+gapminder %>% 
+  group_by(continent, year) %>% 
+  summarize(mean_lifeExp = mean(lifeExp)) %>%
+  summarize(change_mean_lifeExp = mean_lifeExp[year == 2007] - mean_lifeExp[year ==1952]) %>%
+  kable(col.names = c("Continent", "Mean Life Expectancy"), format = "html", caption = "Increases in life expectancy from 1952-2007") 
+
   
 ```
 
 ```{r question 3 plot}
 gapminder %>% 
-  group_by(continent) %>% 
-  select(continent, lifeExp, year) %>%
-  ggplot(aes(x=year, y=lifeExp)) +
-  geom_line(aes(colour = continent)) 
+  group_by(continent, year) %>%
+  summarize(mean_lifeExp = mean(lifeExp)) %>%
+  ggplot(aes(x=year, y=mean_lifeExp)) +
+  geom_line(aes(colour = continent)) +
+  scale_color_discrete("Continents") +
+  labs(x = "Year",
+       y = "Mean Life Expectancy (years)",
+       title = "Changes in life expectancy on each continent") +
+  theme_bw(base_size = 10, base_family = "Courier") +
+  theme(panel.border = element_blank())
 ```
 
-4. Find countries with interesting stories. Open-ended and, therefore, hard. Promising but unsuccessful attempts are encouraged. This will generate interesting questions to follow up on in class.
+**4. Find countries with interesting stories. Open-ended and, therefore, hard. Promising but unsuccessful attempts are encouraged. This will generate interesting questions to follow up on in class.**
 
+I'm originally from Singapore, this island in SE Asia that got its independence from Malaysia in the late 1950s. I'm curious about the statistics of these countries, how did the population, lifeExp and GDP per capita change following independence.
 ```{r}
 
+exploreme <- gapminder %>%
+  filter(country %in% c("Singapore", "Malaysia")) 
+
+exploreme %>%
+  ggplot(aes(x = year))+
+  geom_line(aes(y = pop, colour = country)) +
+  geom_line(aes(y = gdpPercap, colour = country)) +
+  scale_y_continuous(sec.axis = sec_axis(~.*5, name = "GDP per Capita")) +
+  facet_wrap(~country)
+
+
+exploreme %>%
+  ggplot(aes(x = year))+
+  geom_line(aes(y = gdpPercap, colour = country))
 ```
 
-5. Make up your own! Between the dplyr coverage in class and the list above, I think you get the idea.
+## Report on my progress
 
 
-
-```{r}
-gapminder %>% 
-  filter(year %in% c("2000", "2002")) %>% 
-  select(country, year, gdpPercap)
-```
 
