@@ -2,9 +2,7 @@
 title: "hw-03"
 author: "Melanie Ang"
 date: "September 27, 2017"
-output: 
-  html_document: 
-    keep_md: yes
+output: pdf_document
 ---
 
 # Homework 3
@@ -22,8 +20,6 @@ I've picked four task from the selection on the [task section of the website](ht
 **1. Get the maximum and minimum of GDP per capita for all continents.**
 
 ```{r question 1 table}
-summary(gapminder)
-#gdpPercap
 gapminder %>%
   select(continent, gdpPercap) %>%  # subset only relevant columns so its neater
   group_by(continent) %>%           # group according to continents
@@ -32,12 +28,43 @@ gapminder %>%
   knitr::kable()                    # display in kable
 ```
 ```{r question 1 display plot}
-p <- gapminder %>%
+
+# Taking the same function as above, I pipe it into a geom point plot
+# geom_point() for continuous x and continuous y but I'm using this just to visualize the data
+gapminder %>%
   select(continent, gdpPercap) %>%  # subset only relevant columns so its neater
   group_by(continent) %>%           # group according to continents
-  summarize(min_gdppercap = min(gdpPercap), 
-            max_gdppercap = max(gdpPercap)) 
+  summarize(min_gdppercap = min(gdpPercap),
+            max_gdppercap = max(gdpPercap)) %>% # piping it into a ggplot
+  ggplot(aes(x = continent)) +
+    geom_point(aes(y=min_gdppercap), colour = "blue") +
+    geom_point(aes(y=max_gdppercap), colour = "red") +
+    labs(y = "GDP per Cap") +
+    ggtitle("Minimum and maximum GDP per country")
 
+# Now lets try a boxplot
+# Boxplots are usually used for discrete x (like continent) and continuous y
+gapminder %>%
+  select(continent, gdpPercap) %>%  # subset only relevant columns so its neater
+  ggplot(aes(x = continent, y = gdpPercap)) +
+    geom_boxplot()
+
+# Trying out a geom_violin() plot also for discrete x and continuous y
+# And I add pretty colours aka customizations!
+gapminder %>%
+  select(continent, gdpPercap) %>%  # subset only relevant columns so its neater
+  group_by(continent) %>%           # group according to continents
+  summarize(min_gdppercap = min(gdpPercap),
+            max_gdppercap = max(gdpPercap)) %>%
+  ggplot() +
+    geom_point(aes(x=min_gdppercap, y = max_gdppercap)) +
+  facet_wrap(~continent)
+
+    geom_point(aes(y=min_gdppercap), colour = "blue") +
+    geom_point(aes(y=max_gdppercap), colour = "red") +
+    labs(y = "GDP per Cap")
+    
+    
 # display just minimum 
 ggplot(p, aes(x=continent, y=min_gdppercap)) +
   geom_point()
@@ -47,6 +74,8 @@ ggplot(p, aes(x=continent)) +
   geom_point(aes(y=min_gdppercap), colour = "blue") +
   geom_point(aes(y=max_gdppercap), colour = "red") +
   labs(y = "GDP per Cap")
+
+# boxplots? # try facetwrap
 ```
 
 2. Look at the spread of GDP per capita within the continents  
@@ -74,6 +103,7 @@ gapminder %>%
 
 ```{r question 3 table}
 gapminder %>% 
+  #arrange()
   group_by(continent) %>% 
   select(continent, lifeExp, year) %>% 
   knitr::kable()
