@@ -1,15 +1,22 @@
 ---
-title: "hw-04-join-cheatsheet"
+title: "Homework 4: Join Cheatsheet"
 author: "Melanie Ang"
 date: "October 5, 2017"
-output: html_document
+output: 
+  html_document: 
+    keep_md: yes
 ---
 
-# Melanie's cheatsheet for dplyr::join featuring FISHES!
+## Melanie's cheatsheet for dplyr::join featuring FISHES!
+
+```{r results='hide', message = FALSE, warning = FALSE}
+library(tidyverse)
+```
+
 
 We are working with 2 data frames:  
-* Canada_fishes: 7 common marine fishes found in Canadian waters
-* Fish_habitat: Some fun facts about where you can find these fishes. Courtesy of [FishBase](www.fishbase.ca)
+- Canada_fishes: 7 common marine fishes found in Canadian waters  
+- Fish_habitat: Some fun facts about where you can find these fishes. Courtesy of [FishBase](www.fishbase.ca)  
 
 Let's begin by loading these dataframes. These csv files are found within this github folder.
 
@@ -51,16 +58,74 @@ Fish_habitat_kable <- knitr::kable(Fish_habitat)
 <table border = 1>
 <tr>
 <td valign="top">
-  Canada fishes
+  Canada Fishes
   `r Canada_fishes_kable`
 </td>
 <td valign="top">
-  publishers
+  Fish Habitat
   `r Fish_habitat_kable`
 </td>
 </tr>
 </table>
 
-As you can see they are both linked through the common column, Scientific name.
+As you can see they are both linked through the common column, Scientific name. As you can see Canada fishes contain Pacific herring that is not in the Fish Habitat data frame. While Fish Habitat contains Gadus chalcogrammus (which is Alaska Pollock for those who are curious), that is not in the Canada Fishes data table.
+
+I will now demonstrate the following joins:
+- [left_join()](#left_join)
 
 
+###left_join
+left_join(Canada_fishes, Fish_habitat)  
+>Join matching rows from Fish_habitat to Canada_fishes
+It inputs everything from Canada_fishes and matches NA from Fish_habitat if that value is unavailable. Notice that the extra row in Fish_habitat is not present here
+
+```{r message = FALSE, warning = FALSE}
+left_join(Canada_fishes, Fish_habitat, by = "Scientific.name") %>% 
+  knitr::kable()
+
+```
+
+###inner_join
+inner_join(Canada_fishes, Fish_habitat)  
+>Join data and only retain rows in both sets.
+It inputs only data that matches in both. Notice that the extra row in Canada_fishes and the extra row in Fish_habitat are not present here!
+
+```{r message = FALSE, warning = FALSE}
+inner_join(Canada_fishes, Fish_habitat, by = "Scientific.name") %>% 
+  knitr::kable()
+
+```
+
+###full_join
+full_join(Canada_fishes, Fish_habitat)  
+>Join data and retains all values and all rows
+It inputs all data from both datasets. Notice that the extra row in Canada_fishes and the extra row in Fish_habitat are both present here with NAs if the value is unavailable!
+
+```{r}
+full_join(Canada_fishes, Fish_habitat, by = "Scientific.name") %>% 
+  knitr::kable()
+```
+
+###semi_join
+semi_join(Canada_fishes, Fish_habitat)  
+>All rows in Canada_fishes that have a match in Fish_habitat
+This is a filtering join. Basically, it's looking through the first dataset (Canada_fishes) and keeping those (all columns) that have matches in the second data set (Fish_habitat). It returns no columns from Fish_habitat, just uses it as a filter to the first dataset.
+
+```{r}
+# structure/column looks exactly like the Canada_fishes data set except semi join only keeps rows from x that matches rows in y.
+semi_join(Canada_fishes, Fish_habitat, by = "Scientific.name") %>% 
+  knitr::kable()
+
+```
+
+###anti_join
+anti_join(Canada_fishes, Fish_habitat)  
+>All rows in Canada_fishes that do not have a match in Fish_habitat
+This is a filtering join. Basically, it's looking through the first dataset (Canada_fishes) and keeping those (all columns) that DO NOT have matches in the second data set (Fish_habitat). It returns no columns from Fish_habitat, just uses it as a filter to the first dataset.
+
+```{r}
+# structure/column looks exactly like the Canada_fishes data set except semi join only keeps rows from x that matches rows in y.
+anti_join(Canada_fishes, Fish_habitat, by = "Scientific.name") %>% 
+  knitr::kable()
+
+```
