@@ -94,7 +94,7 @@ gapminder %>%
 
 ![](homework-04_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
-**TIP 2: Interestingly because the word, United States is separated by a space, I cannot simply set aes(x=United States), it needs to be surrounded by ` ` NOT ' ' or " " - the latter two calls United States as an object instead of a column within the modified gapminder data frame **
+**TIP 2: Interestingly because the word, United States is separated by a space, I cannot simply set aes(x=United States), it needs to be surrounded by (` `) NOT ' ' or " " - the latter two calls United States as an object instead of a column within the modified gapminder data frame**
 
 For the fun of it, I'll use gather to move the data back to its original form (long format), even though by piping I haven't actually changed the original dataset.
 
@@ -148,87 +148,12 @@ gapminder %>%
 | 2002 | United States |  77.31  |
 | 2007 | United States |  78.24  |
 
-### Join, merge, look up
+# Join, merge, look up
 
 For joins, merge etc - I found Jenny Bryan's [cheatsheet](http://stat545.com/bit001_dplyr-cheatsheet.html) useful and also the [R Studio data wrangling cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf).
 
 ### Activity #2: Create your own cheatsheet
 Honestly, I'm a bit sick of working with the gapminder dataset, so I will take this opportunity to create my own cheatsheet to illustrate the different types of joins. Plus also make it (somewhat) relevant to my thesis about fish!
 
-We are working with 2 data frames:
-* Canada_fishes: 7 common marine fishes found in Canadian waters
-* Fish_habitat: Some fun facts about where you can find these fishes. Courtesy of [FishBase](www.fishbase.ca)
-
-Let's begin by loading these dataframes. These csv files are found within this github folder.
-
-
-```r
-Canada_fishes <- "
-Common name, Scientific name
-Pink salmon, Oncorhynchus gorbuscha
-Chum salmon, Oncorhynchus keta
-Sockeye salmon, Oncorhynchus nerka
-Chinook salmon, Oncorhynchus tshawytscha
-Coho salmon, Oncorhynchus kisutch
-Pacific halibut, Hippoglossus stenolepis
-Pacific herring, Clupea pallasii pallasii
-"
-Canada_fishes <- read.csv("~/STAT545-hw-Ang-Melanie/hw-04/Canada_fishes.csv")
-
-Fish_habitat <- "
-Scientific name, Northern Latitude, Southern Latitude, Maximum depth
-Oncorhynchus gorbuscha, 79N, 29N, 250m
-Oncorhynchus keta, 67N, 24N, 250m
-Oncorhynchus nerka, 72N, 42N, 250m
-Oncorhynchus tshawytscha, 72N, 27N, 375m
-Oncorhynchus kisutch, 72N, 22N, 250m
-Hippoglossus stenolepis, 73N, 42N, 1200m
-Clupea pallasii pallasii, 77N, 33N, 475m
-"
-
-Fish_habitat <- read.csv("~/STAT545-hw-Ang-Melanie/hw-04/Fish_habitat.csv")
-```
-
-Lets take a look at these dataframes more closely:
-
-
-
-<table border = 1>
-<tr>
-<td valign="top">
-  Canada fishes
-  
-
-Common.name       Scientific.name          
-----------------  -------------------------
-Pink salmon       Oncorhynchus gorbuscha   
-Chum salmon       Oncorhynchus keta        
-Sockeye salmon    Oncorhynchus nerka       
-Chinook salmon    Oncorhynchus tshawytscha 
-Coho salmon       Oncorhynchus kisutch     
-Pacific halibut   Hippoglossus stenolepis  
-Pacific herring   Clupea pallasii pallasii 
-
-
-</td>
-<td valign="top">
-  publishers
-  
-
-Scientific.name            Northern.Latitude   Southern.Latitude   Maximum.Depth 
--------------------------  ------------------  ------------------  --------------
-Oncorhynchus gorbuscha     79N                 29N                 250m          
-Oncorhynchus keta          67N                 24N                 250m          
-Oncorhynchus nerka         72N                 42N                 250m          
-Oncorhynchus tshawytscha   72N                 27N                 375m          
-Oncorhynchus kisutch       72N                 22N                 250m          
-Hippoglossus stenolepis    73N                 42N                 1200m         
-Clupea pallasii pallasii   77N                 33N                 475m          
-
-
-</td>
-</tr>
-</table>
-
-
+In order to keep things organized, I've created my cheatsheet in a seperate R script. [Click here](https://github.com/angmelanie/STAT545-hw-Ang-Melanie/blob/master/hw-04/homework-04-join-cheatsheet.md) to access my join cheatsheet!
 

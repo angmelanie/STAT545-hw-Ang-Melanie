@@ -75,7 +75,7 @@ gapminder %>%
   ggtitle("Life Expectancy of United States vs. Mexico") 
 ```
 
-**TIP 2: Interestingly because the word, United States is separated by a space, I cannot simply set aes(x=United States), it needs to be surrounded by ` ` NOT ' ' or " " - the latter two calls United States as an object instead of a column within the modified gapminder data frame **
+**TIP 2: Interestingly because the word, United States is separated by a space, I cannot simply set aes(x=United States), it needs to be surrounded by (` `) NOT ' ' or " " - the latter two calls United States as an object instead of a column within the modified gapminder data frame**
 
 For the fun of it, I'll use gather to move the data back to its original form (long format), even though by piping I haven't actually changed the original dataset.
 ```{r, results='asis'}
@@ -87,12 +87,12 @@ gapminder %>%
   knitr::kable(align = "c", format = "markdown", digits = 2) 
 ```
 
-## Join, merge, look up
+# Join, merge, look up
 
 For joins, merge etc - I found Jenny Bryan's [cheatsheet](http://stat545.com/bit001_dplyr-cheatsheet.html) useful and also the [R Studio data wrangling cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf).
 
 ### Activity #2: Create your own cheatsheet
 Honestly, I'm a bit sick of working with the gapminder dataset, so I will take this opportunity to create my own cheatsheet to illustrate the different types of joins. Plus also make it (somewhat) relevant to my thesis about fish!
 
-In order to keep things organized, I've created my cheatsheet in a seperate R script. [Click here]() to access my join cheatsheet!
+In order to keep things organized, I've created my cheatsheet in a seperate R script. [Click here](https://github.com/angmelanie/STAT545-hw-Ang-Melanie/blob/master/hw-04/homework-04-join-cheatsheet.md) to access my join cheatsheet!
 
