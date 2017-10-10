@@ -9,7 +9,8 @@ To peer review/grade my assignments, look under the **link to my assignment** fo
 |:------------:|:-----------------------------------:|:----------------------------------:|
 |    [1](http://stat545.com/hw01_edit-README.html)     |     within this folder       |  Completed, Peer Reviewed, Graded  |
 |    [2](http://stat545.com/hw02_explore-gapminder-dplyr.html)     |        [hw-02](https://github.com/angmelanie/STAT545-hw-Ang-Melanie/tree/master/hw-02)     |    Completed, Peer Reviewed          |
-| [3](http://stat545.com/hw03_dplyr-and-more-ggplot2.html)   | [hw-03](https://github.com/angmelanie/STAT545-hw-Ang-Melanie/tree/master/hw-03)    | Completed  |
+| [3](http://stat545.com/hw03_dplyr-and-more-ggplot2.html)   | [hw-03](https://github.com/angmelanie/STAT545-hw-Ang-Melanie/tree/master/hw-03)    | Completed, Peer Reviewed  |
+| [4](http://stat545.com/hw04_tidy-data-joins.html) | [hw-04](https://github.com/angmelanie/STAT545-hw-Ang-Melanie/tree/master/hw-04) | Completed |
 
 ## About Me
 
