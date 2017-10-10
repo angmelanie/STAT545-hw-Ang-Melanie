@@ -10,7 +10,7 @@ output:
 ## Melanie's cheatsheet for dplyr::join 
 ## Featuring FISH!
 
-![](http://gph.is/2mNorl2)
+![](https://lph5i1b6c053kq7us26bdk75-wpengine.netdna-ssl.com/wp-content/uploads/2015/05/kissing-gourami-fish.jpg)
 
 Honestly, I'm a bit sick of working with the gapminder dataset, so I will take this opportunity to create my own cheatsheet to illustrate the different types of joins. Plus also make it (somewhat) relevant to my thesis about fish!
 
@@ -56,8 +56,8 @@ Fish_habitat <- read.csv("~/STAT545-hw-Ang-Melanie/hw-04/Fish_habitat.csv")
 Lets take a look at these dataframes more closely:
 
 ```{r include = FALSE}
-Canada_fishes_kable <- knitr::kable(Canada_fishes)
-Fish_habitat_kable <- knitr::kable(Fish_habitat)
+Canada_fishes_kable <- knitr::kable(Canada_fishes, format = "markdown")
+Fish_habitat_kable <- knitr::kable(Fish_habitat, format = "markdown")
 ```
 
 <table border = 1>
@@ -90,7 +90,7 @@ It inputs everything from Canada_fishes and matches NA from Fish_habitat if that
 
 ```{r message = FALSE, warning = FALSE}
 left_join(Canada_fishes, Fish_habitat, by = "Scientific.name") %>% 
-  knitr::kable()
+  knitr::kable(format = "markdown")
 
 ```
 
@@ -101,7 +101,7 @@ It inputs only data that matches in both. Notice that the extra row in Canada_fi
 
 ```{r message = FALSE, warning = FALSE}
 inner_join(Canada_fishes, Fish_habitat, by = "Scientific.name") %>% 
-  knitr::kable()
+  knitr::kable(format = "markdown")
 
 ```
 
@@ -112,7 +112,7 @@ It inputs all data from both datasets. Notice that the extra row in Canada_fishe
 
 ```{r}
 full_join(Canada_fishes, Fish_habitat, by = "Scientific.name") %>% 
-  knitr::kable()
+  knitr::kable(format = "markdown")
 ```
 
 ###semi_join
@@ -123,7 +123,7 @@ This is a filtering join. Basically, it's looking through the first dataset (Can
 ```{r}
 # structure/column looks exactly like the Canada_fishes data set except semi join only keeps rows from x that matches rows in y.
 semi_join(Canada_fishes, Fish_habitat, by = "Scientific.name") %>% 
-  knitr::kable()
+  knitr::kable(format = "markdown")
 
 ```
 
@@ -135,6 +135,6 @@ This is a filtering join. Basically, it's looking through the first dataset (Can
 ```{r}
 # structure/column looks exactly like the Canada_fishes data set except semi join only keeps rows from x that matches rows in y.
 anti_join(Canada_fishes, Fish_habitat, by = "Scientific.name") %>% 
-  knitr::kable()
+  knitr::kable(format = "markdown")
 
 ```
