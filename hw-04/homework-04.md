@@ -94,7 +94,13 @@ gapminder %>%
 
 ![](homework-04_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
-**TIP 2: Interestingly because the word, United States is separated by a space, I cannot simply set aes(x=United States), it needs to be surrounded by (` `) NOT ' ' or " " - the latter two calls United States as an object instead of a column within the modified gapminder data frame**
+**TIP 2: Interestingly because the word, United States is separated by a space, I cannot simply set aes(x=United States), it needs to be surrounded by** 
+
+```r
+# ` `
+```
+**NOT ' ' or " " - the latter two calls United States as an object instead of a column within the modified gapminder data frame**
+
 
 For the fun of it, I'll use gather to move the data back to its original form (long format), even though by piping I haven't actually changed the original dataset.
 
