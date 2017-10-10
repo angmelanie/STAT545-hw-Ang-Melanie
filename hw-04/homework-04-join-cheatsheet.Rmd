@@ -7,7 +7,12 @@ output:
     keep_md: yes
 ---
 
-## Melanie's cheatsheet for dplyr::join featuring FISHES!
+## Melanie's cheatsheet for dplyr::join 
+## Featuring FISH!
+
+![](http://gph.is/2mNorl2)
+
+Honestly, I'm a bit sick of working with the gapminder dataset, so I will take this opportunity to create my own cheatsheet to illustrate the different types of joins. Plus also make it (somewhat) relevant to my thesis about fish!
 
 ```{r results='hide', message = FALSE, warning = FALSE}
 library(tidyverse)
@@ -71,12 +76,16 @@ Fish_habitat_kable <- knitr::kable(Fish_habitat)
 As you can see they are both linked through the common column, Scientific name. As you can see Canada fishes contain Pacific herring that is not in the Fish Habitat data frame. While Fish Habitat contains Gadus chalcogrammus (which is Alaska Pollock for those who are curious), that is not in the Canada Fishes data table.
 
 I will now demonstrate the following joins:
-- [left_join()](#left_join)
+1. [left_join()](#left_join)
+2. [inner_join()](#inner_join)
+3. [full_join()](#full_join)
+4. [semi_join()](#semi_join)
+5. [anti_join()](#anti_join)
 
 
 ###left_join
 left_join(Canada_fishes, Fish_habitat)  
->Join matching rows from Fish_habitat to Canada_fishes
+> Join matching rows from Fish_habitat to Canada_fishes
 It inputs everything from Canada_fishes and matches NA from Fish_habitat if that value is unavailable. Notice that the extra row in Fish_habitat is not present here
 
 ```{r message = FALSE, warning = FALSE}
@@ -87,7 +96,7 @@ left_join(Canada_fishes, Fish_habitat, by = "Scientific.name") %>%
 
 ###inner_join
 inner_join(Canada_fishes, Fish_habitat)  
->Join data and only retain rows in both sets.
+> Join data and only retain rows in both sets.
 It inputs only data that matches in both. Notice that the extra row in Canada_fishes and the extra row in Fish_habitat are not present here!
 
 ```{r message = FALSE, warning = FALSE}
@@ -98,7 +107,7 @@ inner_join(Canada_fishes, Fish_habitat, by = "Scientific.name") %>%
 
 ###full_join
 full_join(Canada_fishes, Fish_habitat)  
->Join data and retains all values and all rows
+> Join data and retains all values and all rows
 It inputs all data from both datasets. Notice that the extra row in Canada_fishes and the extra row in Fish_habitat are both present here with NAs if the value is unavailable!
 
 ```{r}
@@ -108,7 +117,7 @@ full_join(Canada_fishes, Fish_habitat, by = "Scientific.name") %>%
 
 ###semi_join
 semi_join(Canada_fishes, Fish_habitat)  
->All rows in Canada_fishes that have a match in Fish_habitat
+> All rows in Canada_fishes that have a match in Fish_habitat
 This is a filtering join. Basically, it's looking through the first dataset (Canada_fishes) and keeping those (all columns) that have matches in the second data set (Fish_habitat). It returns no columns from Fish_habitat, just uses it as a filter to the first dataset.
 
 ```{r}
@@ -120,7 +129,7 @@ semi_join(Canada_fishes, Fish_habitat, by = "Scientific.name") %>%
 
 ###anti_join
 anti_join(Canada_fishes, Fish_habitat)  
->All rows in Canada_fishes that do not have a match in Fish_habitat
+> All rows in Canada_fishes that do not have a match in Fish_habitat
 This is a filtering join. Basically, it's looking through the first dataset (Canada_fishes) and keeping those (all columns) that DO NOT have matches in the second data set (Fish_habitat). It returns no columns from Fish_habitat, just uses it as a filter to the first dataset.
 
 ```{r}
