@@ -386,10 +386,11 @@ ggsave("gdp-lifeexp-af-bah-ban-ca.png", scale = 2)
 # playing around with scale
 # scale > 1 plot elements will be smaller compared to plot
 
-[Heres the figure I created above]("~/gdp-lifeexp-af-bah-ban-ca.png")
-```
-Interestingly, I try to embed the figure with the code above in the RMarkdown (non code chunk), but I keep getting an error message. Not sure why, anyone else getting this error?
 
+```
+And here is the final figure, I'm uploading and embedding it below:
+
+![Heres the figure I created above](gdp-lifeexp-af-bah-ban-ca.png)
 
 ## To wrap this all up
 Please find my reflection in my README for homework 5. Also resources I've used that have significantly help are:
